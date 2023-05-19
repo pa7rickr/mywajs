@@ -12,10 +12,9 @@ tq to: pedro & edgard & dika
 export const WhatsWebURL = 'https://web.whatsapp.com/';
 
 export const DefaultOptions = {
-    playwright: {
+    puppeteer: {
         headless: true,
-        viewport: null,
-        bypassCSP: false
+        defaultViewport: null
     },
     authTimeoutMs: 0,
     qrMaxRetries: 0,
@@ -23,7 +22,8 @@ export const DefaultOptions = {
     takeoverTimeoutMs: 0,
     userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36',
     ffmpegPath: 'ffmpeg',
-    clearSessions: false
+    bypassCSP: false,
+    proxyAuthentication: undefined
 };
 
 /**
