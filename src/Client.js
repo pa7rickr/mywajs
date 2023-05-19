@@ -10,7 +10,7 @@ wa: 62851574894460
 tq to: pedro & edgard & dika
 */
 import EventEmitter from "events";
-import playwright from "playwright";
+import puppeteer from "puppeteer";
 import moduleRaid from "@pedroslopez/moduleraid/moduleraid.js";
 import {
     createRequire
@@ -100,26 +100,21 @@ class Client extends EventEmitter {
 
         await this.authStrategy.beforeBrowserInitialized();
 
-        const playwrightOpts = this.options.playwright;
-        if (playwrightOpts && playwrightOpts.wsEndpoint) {
-            browser = await playwright.chromium.connect(playwrightOpts.wsEndpoint, {
-                timeout: 0,
-                ...playwrightOpts,
-            });
-            page = await context.newPage();
+        const puppeteerOpts = this.options.puppeteer;
+        if (puppeteerOpts && puppeteerOpts.browserWSEndpoint) {
+            browser = await puppeteer.connect(puppeteerOpts);
+            page = await browser.newPage();
         } else {
-            const browserArgs = [...(playwrightOpts.args || [])];
+            const browserArgs = [...(puppeteerOpts.args || [])];
             if (!browserArgs.find((arg) => arg.includes("--user-agent"))) {
                 browserArgs.push(`--user-agent=${this.options.userAgent}`);
             }
 
-            browser = await playwright.chromium.launchPersistentContext(
-                playwrightOpts.userDataDir, {
-                    ...playwrightOpts,
-                    args: browserArgs,
-                    timeout: 0,
-                }
-            );
+            browser = await puppeteer.chromium.launch({
+                ...puppeteerOpts,
+                args: browserArgs,
+                timeout: 0
+            });
             page = (await browser.pages())[0];
         }
 
