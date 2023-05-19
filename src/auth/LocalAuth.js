@@ -33,18 +33,18 @@ class LocalAuth extends BaseAuthStrategy {
     }
 
     async beforeBrowserInitialized() {
-        const playwrightOpts = this.client.options.playwright;
+        const puppeteerOpts = this.client.options.puppeteer;
         const sessionDirName = this.clientId ? `session-${this.clientId}` : 'session';
         const dirPath = path.join(this.dataPath, sessionDirName);
 
-        if (playwrightOpts.userDataDir && playwrightOpts.userDataDir !== dirPath) {
+        if(puppeteerOpts.userDataDir && puppeteerOpts.userDataDir !== dirPath) {
             throw new Error('LocalAuth is not compatible with a user-supplied userDataDir.');
         }
 
         fs.mkdirSync(dirPath, { recursive: true });
-
-        this.client.options.playwright = {
-            ...playwrightOpts,
+        
+        this.client.options.puppeteer = {
+            ...puppeteerOpts,
             userDataDir: dirPath
         };
 
