@@ -11,7 +11,7 @@ import repl from 'repl';
 import { Client, LocalAuth } from './index.js';
 
 const client = new Client({
-    playwright: { headless: false }, 
+    puppeteer: { headless: false }, 
     authStrategy: new LocalAuth()
 });
 
