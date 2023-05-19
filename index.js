@@ -2,7 +2,7 @@
 /*
 MywaJS
 Pengembangan ulang whatsapp-web.js
-menggunakan wjs + playwright
+menggunakan wjs + puppeteer
 contact:
 email: amiruldev20@gmail.com
 ig: amirul.dev
